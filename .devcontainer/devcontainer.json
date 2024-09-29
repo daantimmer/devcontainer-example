@@ -1,0 +1,8 @@
+{
+	"build": {
+		"context": "..",
+		// dependabot can't update the image if it's not in the Dockerfile.
+		"dockerfile": "Dockerfile"
+	},
+	"postCreateCommand": "xwin --accept-license splat --preserve-ms-arch-notation --include-debug-libs && mv .xwin-cache/splat/ /winsdk && rm -rf .xwin-cache"
+}

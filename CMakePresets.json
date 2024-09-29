@@ -1,0 +1,96 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "defaults",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "installDir": "${sourceDir}/install",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "On",
+                "CMAKE_COMPILE_WARNING_AS_ERROR": "On"
+            }
+        },
+        {
+            "name": "host",
+            "displayName": "Configuration for Host Tooling and Tests",
+            "inherits": "defaults",
+            "cacheVariables": {
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel"
+            },
+            "generator": "Ninja Multi-Config"
+        },
+        {
+            "name": "host-ClangMsvc",
+            "displayName": "Configuration for Host Tooling using clang-cl to target Windows",
+            "inherits": "defaults",
+            "toolchainFile": "${sourceDir}/cmake/toolchain-clang-x86_64-pc-windows-msvc.cmake",
+            "cacheVariables": {
+                "CMAKE_COMPILE_WARNING_AS_ERROR": "Off",
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
+                "EMIL_BUILD_TESTS": "Off",
+                "EMIL_BUILD_EXAMPLES": "Off"
+            },
+            "generator": "Ninja Multi-Config"
+        },
+        {
+            "name": "embedded",
+            "displayName": "Configuration for embedded",
+            "inherits": "defaults",
+            "toolchainFile": "${sourceDir}/cmake/toolchain-arm-gcc-m4-fpv4-sp-d16.cmake",
+            "cacheVariables": {
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
+                "EMIL_INCLUDE_SEGGER_RTT": "On",
+                "TARGET_CORTEX": "m4"
+            },
+            "generator": "Ninja Multi-Config"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "host-Debug",
+            "configuration": "Debug",
+            "configurePreset": "host"
+        },
+        {
+            "name": "host-Release",
+            "configuration": "Release",
+            "configurePreset": "host"
+        },
+        {
+            "name": "host-ClangMsvc-Debug",
+            "configuration": "Debug",
+            "configurePreset": "host-ClangMsvc"
+        },
+        {
+            "name": "host-ClangMsvc-RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "configurePreset": "host-ClangMsvc"
+        },
+        {
+            "name": "host-ClangMsvc-Release",
+            "configuration": "Release",
+            "configurePreset": "host-ClangMsvc"
+        },
+        {
+            "name": "embedded-Debug",
+            "configuration": "Debug",
+            "configurePreset": "embedded"
+        },
+        {
+            "name": "embedded-Release",
+            "configuration": "Release",
+            "configurePreset": "embedded"
+        },
+        {
+            "name": "embedded-RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "configurePreset": "embedded"
+        },
+        {
+            "name": "embedded-MinSizeRel",
+            "configuration": "MinSizeRel",
+            "configurePreset": "embedded"
+        }
+    ]
+}
